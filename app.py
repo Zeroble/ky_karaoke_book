@@ -6,18 +6,27 @@ app = FastAPI()
 
 engine = engineconn("sqlite:///./songs_test.db")
 session = engine.sessionmaker()
+defSongRetQery = session.query(SONG.seq, SONG.name, SONG.singer)
 
 
+# 노래 제목으로 검색
 @app.get("/search/name/{song_name}")
 def read_item(song_name: str):
-    if len(song_name) < 2:
-        return "2자 이상 입력"
-    ret = session.query(DBSong.seq, DBSong.name, DBSong.singer).filter(DBSong.name_joined.like(f"%{song_name}%")).all()
-    print(ret)
-    ret = {"cnt": len(ret), "data": ret}
-    return ret
+    if len(song_name) == 1:
+        ret = defSongRetQery.filter(SONG.name_joined == song_name).all()
+    else:
+        ret = defSongRetQery.filter(SONG.name_joined.like(f"%{song_name}%")).all()
+    return {"cnt": len(ret), "data": ret}
 
 
+# 가수로 검색
+@app.get("/search/singer/{song_singer}")
+def read_item(song_singer: str):
+    ret = defSongRetQery.filter(SONG.singer_joined.like(f"%{song_singer}%")).all()
+    return {"cnt": len(ret), "data": ret}
+
+
+#번호로 검색
 @app.get("/search/seq/{song_seq}")
 def read_item(song_seq: int):
-    return session.query(DBSong).get(song_seq)
+    ret = session.query(SONG).get(song_seq)

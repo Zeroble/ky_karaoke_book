@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 
+
 class engineconn:
     def __init__(self, DB_URL):
         self.engine = create_engine(DB_URL, connect_args={"check_same_thread": False}, echo=True)
@@ -14,3 +15,4 @@ class engineconn:
     def connection(self):
         conn = self.engine.connect()
         return conn
+
