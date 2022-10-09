@@ -1,25 +1,7 @@
 import re
 import sqlite3
 
-
-def parseSong(song_data):
-    song_name = song_data.find("songname").text
-    song_seq = song_data.find("songseq").text
-    song_writer = song_data.find("songwriter").text
-    song_compose = song_data.find("songcompos").text
-    song_singer = song_data.find("songperson").text
-    song_lyrics = song_data.find("songlyrics").text
-    song_release_month = song_data.find("songrelmon").text
-    song_country = song_data.find("songctry").text
-    song_key_sex = song_data.find("s_key_sex").text
-    song_m_key = song_data.find("s_m_key").text
-    song_f_key = song_data.find("s_f_key").text
-    return (
-        int(song_seq), song_name, song_singer, song_writer, song_compose, song_lyrics, song_country, song_release_month,
-        song_key_sex, song_m_key, song_f_key)
-
-
-conn = sqlite3.connect("songs_test.db", isolation_level=None)
+conn = sqlite3.connect("../songs_test.db", isolation_level=None)
 c = conn.cursor()
 e = conn.cursor()
 c.execute('SELECT * FROM songs')

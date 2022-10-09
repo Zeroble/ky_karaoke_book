@@ -1,5 +1,5 @@
 *.db
-db_crawler.py
+crawler/db_crawler.py
 .idea/*
 README
 __pycache__/*
